@@ -1,0 +1,94 @@
+
+CREATE TABLE IF NOT EXISTS `callcenter` (
+  `name` varchar(20) NOT NULL,
+  `details` varchar(30) NOT NULL,
+  `address` varchar(30) NOT NULL
+);
+
+
+
+CREATE TABLE IF NOT EXISTS `calllog` (
+  `callLogId` int(11) NOT NULL AUTO_INCREMENT,
+  `callId` varchar(10) DEFAULT NULL,
+  `operatorId` varchar(10) NOT NULL,
+  `problemId` varchar(10) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `duration` int(11) DEFAULT NULL,
+  PRIMARY KEY (`callLogId`),
+  KEY `callId` (`callId`)
+);
+
+CREATE TABLE IF NOT EXISTS `callreq` (
+  `callId` int(11) NOT NULL AUTO_INCREMENT,
+  `phno` double DEFAULT NULL,
+  `custId` int(11) DEFAULT NULL,
+  `operatorId` varchar(10) DEFAULT NULL,
+  `problemId` varchar(10) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`callId`),
+  KEY `custId` (`custId`),
+  KEY `problemId` (`problemId`)
+) ;
+
+
+
+CREATE TABLE IF NOT EXISTS `customer` (
+  `custId` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `address` varchar(30) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `state` varchar(20) NOT NULL,
+  `pin` int(6) NOT NULL,
+  `phno` double NOT NULL,
+  PRIMARY KEY (`custId`)
+) ;
+
+
+
+CREATE TABLE IF NOT EXISTS `department` (
+  `deptId` varchar(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `no_of_empployees` int(11) NOT NULL,
+  PRIMARY KEY (`deptId`)
+) ;
+
+
+
+CREATE TABLE IF NOT EXISTS `employee` (
+  `empId` varchar(10) NOT NULL,
+  `deptId` varchar(10) DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `address` varchar(30) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `state` varchar(20) DEFAULT NULL,
+  `pin` int(11) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `phno` double DEFAULT NULL,
+  PRIMARY KEY (`empId`),
+  KEY `deptId` (`deptId`)
+);
+
+CREATE TABLE IF NOT EXISTS `problem` (
+  `problemId` varchar(10) NOT NULL,
+  `problemType` varchar(20) NOT NULL,
+  `problem` varchar(50) NOT NULL,
+  `specialistId` varchar(10) NOT NULL,
+  PRIMARY KEY (`problemId`)
+) ;
+
+CREATE TABLE IF NOT EXISTS `solutiondesk` (
+  `solutionId` int(10) NOT NULL AUTO_INCREMENT,
+  `callId` int(11) NOT NULL,
+  `specialistId` varchar(10) NOT NULL,
+  `problem` varchar(100) NOT NULL,
+  `solution` varchar(100) NOT NULL,
+  PRIMARY KEY (`solutionId`)
+);
+
+CREATE TABLE IF NOT EXISTS `specialist` (
+  `empId` varchar(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `problemId` varchar(10) NOT NULL,
+  PRIMARY KEY (`empId`)
+) ;
